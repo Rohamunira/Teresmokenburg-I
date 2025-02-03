@@ -57,14 +57,11 @@ with playwright.sync_api.sync_playwright() as playwrights:
             basic_url = urls_info.scheme + "://" + urls_info.netloc
             if len(stored_link) == 2:
                 next_url = stored_link[stored_link.index(basic_url)]
-                # print(colorama.Fore.MAGENTA + "still in now index" + colorama.Fore.WHITE)
             else:
                 if stored_link.index(basic_url) == len(stored_link) - 2:
                     next_url = stored_link[stored_link.index(basic_url) - 20]
-                    # print(colorama.Fore.MAGENTA + "back to - 20" + colorama.Fore.WHITE)
                 else:
                     next_url = stored_link[stored_link.index(basic_url) + 1]
-                    # print(colorama.Fore.MAGENTA + "return to next index" + colorama.Fore.WHITE)
             print("no new link found, now trying: " + next_url)
             run(next_url)
     run(link = link)
