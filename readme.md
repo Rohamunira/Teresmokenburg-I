@@ -15,3 +15,6 @@ This is a tool used to search for links from website to website. For now, this h
 
 ## **Negative Impact**
 Sometimes because this software clicks on random links, and the destination is unknown, it's better to be careful because it could go to a dark website or a website that has bad intentions
+
+## **Motivation**
+I don't have anything fun but I have to make something to fill my boredom by challenging myself to make a program to find url links
