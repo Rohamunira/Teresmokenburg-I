@@ -1,6 +1,6 @@
 ## **Information**
 
-This is a tool used to search for links from website to website. For now, this has the function of searching for useful websites without knowing certain keywords, even if it takes a long time.
+This is a tool used to search for links from website to website. For now, this has the function of searching for useful websites without knowing certain keywords, even if it takes a long time. [Blog post about these project](https://rohamunira-official.blogspot.com/2025/02/teresmokenburg-project-webcrawl-url.html)
 
 ## **Way to run this program**
 
