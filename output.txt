@@ -1650,7 +1650,6 @@ https://rvasec.com
 https://www.shmoocon.org
 https://shmoocon.org
 http://shmoocon.bsky.social
-https://roadmap.sh/
 https://roadmap.sh
 https://contest-2021.korelogic.com
 https://jekyllrb.com

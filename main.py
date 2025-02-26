@@ -40,15 +40,13 @@ with playwright.sync_api.sync_playwright() as playwrights:
         links = page.locator("a")
         try:
             if links:
-                for n in range(links.count()):
+                for n in numpy.arange(links.count()):
                     urls = links.nth(n).get_attribute("href")
                     urls_info = urllib.parse.urlparse(urls)
                     if urls_info.scheme and urls_info.netloc:
                         with open(output, "rt") as f:
-                            stored_link: numpy.ndarray = numpy.array(f.readlines())
+                            stored_link: numpy.ndarray = numpy.array(f.read().splitlines())
                             basic_url = urls_info.scheme + "://" + urls_info.netloc
-                        # print(numpy.isin(basic_url, stored_link))
-                        # print(basic_url)
                         for n in stored_link():
                             print(basic_url)
                         if not numpy.isin(basic_url, stored_link): # basic_url not in stored_link
@@ -58,18 +56,17 @@ with playwright.sync_api.sync_playwright() as playwrights:
                             run(urls)
         except: pass
         with open(output, "rt") as f:
-            stored_link: numpy.ndarray = numpy.array(f.readlines())
+            stored_link: numpy.ndarray = numpy.array(f.read().splitlines())
             urls_info = urllib.parse.urlparse(link)
-            basic_url = ic(urls_info.scheme + "://" + urls_info.netloc)
+            basic_url = urls_info.scheme + "://" + urls_info.netloc
             if len(stored_link) == 2:
-                next_url = ic(stored_link[numpy.where(stored_link == basic_url)]) # stored_link.index(basic_url)
+                next_url = stored_link[numpy.where(stored_link == basic_url)[0]] # stored_link.index(basic_url)
             else:
-                if ic(numpy.where(stored_link == basic_url) == len(stored_link) - 2): # stored_link.index(basic_url) == len(stored_link) - 2
-                    next_url = ic(stored_link[numpy.where(stored_link == basic_url) - 50]) # stored_link.index(basic_url) - 50
+                if numpy.where(stored_link == basic_url)[0] == len(stored_link) - 2: # stored_link.index(basic_url) == len(stored_link) - 2
+                    next_url = stored_link[numpy.where(stored_link == basic_url)[0] - 50] # stored_link.index(basic_url) - 50
                 else:
-                    print(ic(stored_link[numpy.where(stored_link == basic_url)]))
                     # print(stored_link[numpy.where(stored_link == basic_url)])
-                    next_url = ic(stored_link[numpy.where(stored_link == basic_url) + 1]) # stored_link.index(basic_url) + 1
-            print("no new link found, now trying: " + next_url)
-            run(next_url)
+                    next_url = stored_link[numpy.where(stored_link == basic_url)[0] + 1] # stored_link.index(basic_url) + 1
+            print(("no new link found, now trying: " + next_url)[0])
+            run(next_url[0])
     run(link = link)
