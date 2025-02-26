@@ -47,8 +47,6 @@ with playwright.sync_api.sync_playwright() as playwrights:
                         with open(output, "rt") as f:
                             stored_link: numpy.ndarray = numpy.array(f.read().splitlines())
                             basic_url = urls_info.scheme + "://" + urls_info.netloc
-                        for n in stored_link():
-                            print(basic_url)
                         if not numpy.isin(basic_url, stored_link): # basic_url not in stored_link
                             with open(output, "at") as f:
                                 f.write(basic_url + "\n")
