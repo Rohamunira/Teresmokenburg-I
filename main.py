@@ -7,6 +7,7 @@ import urllib
 import pathlib
 import argparse
 import numpy
+from icecream import ic
 parser = argparse.ArgumentParser(description = "sample using")
 parser.add_argument('--urls', type = str, help = "website urls")
 parser.add_argument('--chromium', type = str, help = "custom chromium path")
@@ -59,15 +60,16 @@ with playwright.sync_api.sync_playwright() as playwrights:
         with open(output, "rt") as f:
             stored_link: numpy.ndarray = numpy.array(f.readlines())
             urls_info = urllib.parse.urlparse(link)
-            basic_url = urls_info.scheme + "://" + urls_info.netloc
+            basic_url = ic(urls_info.scheme + "://" + urls_info.netloc)
             if len(stored_link) == 2:
-                next_url = stored_link[numpy.where(stored_link == basic_url)] # stored_link.index(basic_url)
+                next_url = ic(stored_link[numpy.where(stored_link == basic_url)]) # stored_link.index(basic_url)
             else:
-                print(stored_link.ndim)
-                if numpy.where(stored_link == basic_url) == len(stored_link) - 2: # stored_link.index(basic_url) == len(stored_link) - 2
-                    next_url = stored_link[numpy.where(stored_link == basic_url) - 50] # stored_link.index(basic_url) - 50
+                if ic(numpy.where(stored_link == basic_url) == len(stored_link) - 2): # stored_link.index(basic_url) == len(stored_link) - 2
+                    next_url = ic(stored_link[numpy.where(stored_link == basic_url) - 50]) # stored_link.index(basic_url) - 50
                 else:
-                    next_url = stored_link[numpy.where(stored_link == basic_url) + 1] # stored_link.index(basic_url) + 1
+                    print(ic(stored_link[numpy.where(stored_link == basic_url)]))
+                    # print(stored_link[numpy.where(stored_link == basic_url)])
+                    next_url = ic(stored_link[numpy.where(stored_link == basic_url) + 1]) # stored_link.index(basic_url) + 1
             print("no new link found, now trying: " + next_url)
             run(next_url)
     run(link = link)
