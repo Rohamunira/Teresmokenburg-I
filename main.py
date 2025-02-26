@@ -6,14 +6,16 @@ import os
 import urllib
 import pathlib
 import argparse
+import colorama
+import numpy
+print(colorama.Fore.BLUE)
 parser = argparse.ArgumentParser(description = "sample using")
 parser.add_argument('--urls', type = str, help = "website urls")
 parser.add_argument('--chromium', type = str, help = "custom chromium path")
 parser.add_argument('--output', type = str, help = "path to output file")
 parser.add_argument('--headless', type = str, help = "toggle headless mode")
 args = parser.parse_args()
-print(args.urls)
-link = args.urls if args.urls else "https://playwright.dev"
+link = args.urls if args.urls else "https://zealdocs.org"
 chromium_app = args.chromium if args.chromium else ""
 output = args.output if args.output else "output.txt"
 use_headless = True if args.headless == "True" else False
@@ -24,7 +26,8 @@ with playwright.sync_api.sync_playwright() as playwrights:
     if chromium_app:
         browser = playwrights.chromium.launch(
             headless = use_headless,
-            executable_path = chromium_app
+            executable_path = chromium_app,
+            timeout = 100000
         )
     else:
         browser = playwrights.chromium.launch(
@@ -34,7 +37,7 @@ with playwright.sync_api.sync_playwright() as playwrights:
     page = browser.new_page()
     def run(link):
         print("now opening: " + link)
-        page.goto(link)
+        page.goto(link, timeout = 100000)
         links = page.locator("a")
         try:
             if links:
@@ -59,7 +62,7 @@ with playwright.sync_api.sync_playwright() as playwrights:
                 next_url = stored_link[stored_link.index(basic_url)]
             else:
                 if stored_link.index(basic_url) == len(stored_link) - 2:
-                    next_url = stored_link[stored_link.index(basic_url) - 20]
+                    next_url = stored_link[stored_link.index(basic_url) - 50]
                 else:
                     next_url = stored_link[stored_link.index(basic_url) + 1]
             print("no new link found, now trying: " + next_url)
