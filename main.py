@@ -6,9 +6,7 @@ import os
 import urllib
 import pathlib
 import argparse
-import colorama
 import numpy
-print(colorama.Fore.BLUE)
 parser = argparse.ArgumentParser(description = "sample using")
 parser.add_argument('--urls', type = str, help = "website urls")
 parser.add_argument('--chromium', type = str, help = "custom chromium path")
@@ -46,22 +44,23 @@ with playwright.sync_api.sync_playwright() as playwrights:
                     urls_info = urllib.parse.urlparse(urls)
                     if urls_info.scheme and urls_info.netloc:
                         with open(output, "rt") as f:
-                            stored_link = f.read().split("\n")
+                            stored_link: numpy.ndarray = numpy.array(f.readlines())
                             basic_url = urls_info.scheme + "://" + urls_info.netloc
-                        if basic_url not in stored_link:
+                        if not numpy.isin(basic_url, stored_link): # basic_url not in stored_link
                             with open(output, "at") as f:
                                 f.write(basic_url + "\n")
                             print("found link: " + basic_url)
                             run(urls)
         except: pass
         with open(output, "rt") as f:
-            stored_link = f.read().split("\n")
+            stored_link: numpy.ndarray = numpy.array(f.readlines())
             urls_info = urllib.parse.urlparse(link)
             basic_url = urls_info.scheme + "://" + urls_info.netloc
             if len(stored_link) == 2:
                 next_url = stored_link[stored_link.index(basic_url)]
             else:
-                if stored_link.index(basic_url) == len(stored_link) - 2:
+                print(stored_link.ndim)
+                if numpy.where(stored_link == basic_url) == len(stored_link) - 2: # stored_link.index(basic_url) == len(stored_link) - 2
                     next_url = stored_link[stored_link.index(basic_url) - 50]
                 else:
                     next_url = stored_link[stored_link.index(basic_url) + 1]
