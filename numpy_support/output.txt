@@ -1699,3 +1699,4 @@ https://wordpress.tv
 https://meta.trac.wordpress.org
 https://make.wordpress.org
 https://login.wordpress.org
+https://x.com
